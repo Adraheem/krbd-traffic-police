@@ -1,0 +1,33 @@
+$size: 45px;
+
+.container {
+    display: flex;
+    align-items: stretch;
+    height: $size;
+    border: 1.5px solid #e5e5e5;
+    border-radius: 10px;
+    background-color: #fff;
+
+    &:focus-within {
+        border-color: var(--primary-color);
+    }
+}
+.inputDiv {
+    flex: 1;
+
+    > .input {
+        border: 0 !important;
+    }
+}
+.button,
+.search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    width: $size;
+    font-size: 1.2rem;
+    cursor: pointer;
+}

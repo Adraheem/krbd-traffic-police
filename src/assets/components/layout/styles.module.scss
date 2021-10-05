@@ -1,5 +1,7 @@
 .main {
     position: relative;
-    width: calc(100vw - 350px);
+    width: calc(100% - 350px);
     left: 350px;
+    margin: 0;
+    padding-bottom: 50px;
 }
