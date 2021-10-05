@@ -8,7 +8,7 @@ const Layout = ({ children }) => {
       <Sidebar />
       <main className={styles.main}>
         <Header />
-        <div className="uk-container uk-container-large">{children}</div>
+        <div className="uk-container uk-container-small">{children}</div>
       </main>
     </div>
   );

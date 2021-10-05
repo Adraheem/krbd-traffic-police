@@ -66,4 +66,44 @@ export const VehicleListHistory = ({
   );
 };
 
+export const AppealList = ({ reason, plate, time, content, status }) => {
+  return (
+    <tr>
+      <td className="uk-table-link">
+        <Link to={`/car/${plate}`} className="uk-link-reset">
+          <div>
+            <p className="uk-margin-remove">
+              <Icon
+                icon="akar-icons:circle-fill"
+                inline={true}
+                className={`uk-text-${status} uk-text-small uk-margin-small-right`}
+              />
+              {reason} - <span className="uk-text-bold">{plate}</span>
+            </p>
+            <p className="uk-margin-remove uk-text-small uk-text-truncate">
+              <span className="uk-margin-small-right">{time}</span>
+              {content}
+            </p>
+          </div>
+        </Link>
+      </td>
+
+      <td className="">
+        <Icon
+          icon="akar-icons:circle-check-fill"
+          fontSize="2rem"
+          className="uk-text-success"
+        />
+      </td>
+      <td className="">
+        <Icon
+          icon="ic:round-cancel"
+          fontSize="2rem"
+          className="uk-text-danger"
+        />
+      </td>
+    </tr>
+  );
+};
+
 export default VehicleList;

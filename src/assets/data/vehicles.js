@@ -92,3 +92,55 @@ export const vehiclesHistory = [
     status: "success",
   },
 ];
+
+export const appeal = [
+  {
+    reason: "Turning without Indicator",
+    plate: "TOY1346",
+    time: "14:30",
+    content: "I appeal not guilt for the fine imposed on me and....",
+    status: "success",
+  },
+  {
+    reason: "Turning without Indicator",
+    plate: "TOY1346",
+    time: "14:30",
+    content: "I appeal not guilt for the fine imposed on me and....",
+    status: "success",
+  },
+  {
+    reason: "Turning without Indicator",
+    plate: "TOY1346",
+    time: "14:30",
+    content: "I appeal not guilt for the fine imposed on me and....",
+    status: "success",
+  },
+  {
+    reason: "Turning without Indicator",
+    plate: "TOY1346",
+    time: "14:30",
+    content: "I appeal not guilt for the fine imposed on me and....",
+    status: "success",
+  },
+  {
+    reason: "Turning without Indicator",
+    plate: "TOY1346",
+    time: "14:30",
+    content: "I appeal not guilt for the fine imposed on me and....",
+    status: "success",
+  },
+  {
+    reason: "Turning without Indicator",
+    plate: "TOY1346",
+    time: "14:30",
+    content: "I appeal not guilt for the fine imposed on me and....",
+    status: "success",
+  },
+  {
+    reason: "Turning without Indicator",
+    plate: "TOY1346",
+    time: "14:30",
+    content: "I appeal not guilt for the fine imposed on me and....",
+    status: "success",
+  },
+];
