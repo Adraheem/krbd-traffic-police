@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react";
-import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import styles from "./styles.module.scss";
 import isEmpty from "is-empty";
 
@@ -8,6 +8,14 @@ const SearchBar = ({ path, placeholder }) => {
   const [query, setQuery] = useState("");
 
   const history = useHistory();
+  const { search } = useLocation();
+
+  const q = new URLSearchParams(search);
+  const qu = q.get("q");
+
+  useEffect(() => {
+    !!qu && setQuery(qu);
+  }, [qu]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,6 +36,7 @@ const SearchBar = ({ path, placeholder }) => {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={placeholder}
+            spellCheck={false}
             className={`uk-input uk-height-1-1 ${styles.input}`}
           />
         </div>
