@@ -1,0 +1,30 @@
+.sidebar {
+    background-color: var(--primary-color);
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 350px;
+    padding: 20px;
+}
+.nav {
+    margin-top: 200px;
+}
+.nav > ul > li > a {
+    color: #fff;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    padding: 10px 15px;
+}
+.nav > ul > li > a:hover {
+    color: rgba(255, 255, 255, 0.7);
+}
+.nav > ul > li.active {
+    background-color: #fff;
+    border-radius: 10px;
+}
+.nav > ul > li.active > a {
+    color: var(--primary-color);
+}
