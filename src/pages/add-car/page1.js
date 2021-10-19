@@ -1,8 +1,34 @@
 import { Icon } from "@iconify/react";
+import isEmpty from "is-empty";
+import { useEffect, useState } from "react";
 import Card from "../../assets/components/common/card";
 import TextInput from "../../assets/components/common/textInput";
 
 const AddCarFirst = ({ details, onChange, next }) => {
+  const [disabled, setDisabled] = useState(true);
+
+  useEffect(() => {
+    isEmpty(details.name) ||
+    isEmpty(details.nationality) ||
+    isEmpty(details.dob) ||
+    isEmpty(details.phone) ||
+    isEmpty(details.address) ||
+    isEmpty(details.nin) ||
+    isEmpty(details.passport) ||
+    isEmpty(details.idcard)
+      ? setDisabled(true)
+      : setDisabled(false);
+  }, [
+    details.name,
+    details.nationality,
+    details.dob,
+    details.phone,
+    details.address,
+    details.nin,
+    details.passport,
+    details.idcard,
+  ]);
+
   return (
     <Card>
       <h2 className="uk-margin-remove-bottom">Add car</h2>
@@ -109,7 +135,9 @@ const AddCarFirst = ({ details, onChange, next }) => {
           <button
             type="button"
             onClick={next}
-            className="uk-button uk-button-primary uk-button-large uk-border-rounded uk-width-small"
+            className={`uk-button uk-button-large uk-border-rounded uk-width-small ${
+              disabled ? "uk-disabled" : "uk-button-primary"
+            }`}
           >
             <Icon icon="akar-icons:arrow-right" fontSize="1.4rem" />
           </button>

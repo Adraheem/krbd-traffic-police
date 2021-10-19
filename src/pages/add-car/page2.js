@@ -1,8 +1,38 @@
 import { Icon } from "@iconify/react";
+import isEmpty from "is-empty";
+import { useEffect, useState } from "react";
 import Card from "../../assets/components/common/card";
 import TextInput from "../../assets/components/common/textInput";
 
 const AddCarSecond = ({ details, onChange, back, submit }) => {
+  const [disabled, setDisabled] = useState(true);
+
+  useEffect(() => {
+    isEmpty(details.model) ||
+    isEmpty(details.plate) ||
+    isEmpty(details.color) ||
+    isEmpty(details.date_of_purchase) ||
+    isEmpty(details.spec) ||
+    isEmpty(details.card) ||
+    isEmpty(details.exp) ||
+    isEmpty(details.cvv) ||
+    isEmpty(details.bvn) ||
+    isEmpty(details.bank_name)
+      ? setDisabled(true)
+      : setDisabled(false);
+  }, [
+    details.model,
+    details.plate,
+    details.color,
+    details.date_of_purchase,
+    details.spec,
+    details.card,
+    details.exp,
+    details.cvv,
+    details.bvn,
+    details.bank_name,
+  ]);
+
   return (
     <Card>
       <h2 className="uk-margin-remove-bottom">Add car</h2>
@@ -35,7 +65,7 @@ const AddCarSecond = ({ details, onChange, back, submit }) => {
           </div>
           <div>
             <TextInput
-              type="text"
+              type="color"
               name="color"
               value={details.color}
               onChange={onChange}
@@ -45,7 +75,7 @@ const AddCarSecond = ({ details, onChange, back, submit }) => {
           </div>
           <div>
             <TextInput
-              type="text"
+              type="date"
               name="date_of_purchase"
               value={details.date_of_purchase}
               onChange={onChange}
@@ -137,7 +167,9 @@ const AddCarSecond = ({ details, onChange, back, submit }) => {
           <button
             type="button"
             onClick={submit}
-            className="uk-button uk-button-primary uk-button-large uk-border-rounded uk-width-small"
+            className={`uk-button uk-button-large uk-border-rounded uk-width-small ${
+              disabled ? "uk-disabled" : "uk-button-primary"
+            }`}
           >
             Submit
           </button>

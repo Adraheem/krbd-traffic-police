@@ -5,19 +5,24 @@ import AppealPage from "../pages/appeal";
 import CarPage from "../pages/car";
 import HistoryPage from "../pages/history";
 import HomePage from "../pages/home";
+import LoginPage from "../pages/login";
+import AddOffence from "../pages/offence/add";
 import SearchPage from "../pages/search";
+import PrivateRoute from "./privateRoute";
 
 const AllRoutes = () => {
   return (
     <BrowserRouter>
       <Layout>
         <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/history" component={HistoryPage} />
-          <Route exact path="/add-car" component={AddCarPage} />
-          <Route exact path="/appeal" component={AppealPage} />
-          <Route exact path="/car/:id" component={CarPage} />
-          <Route exact path="/search/:type" component={SearchPage} />
+          <PrivateRoute exact path="/" component={HomePage} />
+          <Route exact path="/login" component={LoginPage} />
+          <PrivateRoute exact path="/history" component={HistoryPage} />
+          <PrivateRoute exact path="/add-car" component={AddCarPage} />
+          <PrivateRoute exact path="/appeal" component={AppealPage} />
+          <PrivateRoute exact path="/car/:id" component={CarPage} />
+          <PrivateRoute exact path="/search/:type" component={SearchPage} />
+          <PrivateRoute exact path="/offence/:car/add" component={AddOffence} />
         </Switch>
       </Layout>
     </BrowserRouter>

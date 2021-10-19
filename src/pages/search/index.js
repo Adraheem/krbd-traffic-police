@@ -4,7 +4,7 @@ import SearchBar from "../../assets/components/common/searchBar";
 import VehicleList, {
   VehicleListHistory,
 } from "../../assets/components/common/vehicleList";
-import { vehicles, vehiclesHistory } from "../../assets/data/vehicles";
+import { appeal, vehicles, vehiclesHistory } from "../../assets/data/vehicles";
 import { useLocation } from "react-router";
 
 const SearchPage = () => {
@@ -26,7 +26,11 @@ const SearchPage = () => {
 
       <div className="uk-margin-large-top">
         <Card>
-          <h2>{params.type === "car" ? "Vehicles" : "History"}</h2>
+          <h2>
+            {params.type === "car" && "Vehicles"}
+            {params.type === "history" && "History"}
+            {params.type === "appeal" && "Appeal"}
+          </h2>
 
           <table className="uk-table uk-table-large uk-table-divider uk-table-hover">
             <tbody>
@@ -37,6 +41,11 @@ const SearchPage = () => {
 
               {type === "history" &&
                 vehiclesHistory.map((vehicle, idx) => (
+                  <VehicleListHistory key={idx} {...vehicle} />
+                ))}
+
+              {type === "appeal" &&
+                appeal.map((vehicle, idx) => (
                   <VehicleListHistory key={idx} {...vehicle} />
                 ))}
             </tbody>

@@ -1,8 +1,14 @@
+import axios from "axios";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import { useHistory } from "react-router-dom";
+import { API_URL } from "../../utils/variables";
 import AddCarFirst from "./page1";
 import AddCarSecond from "./page2";
 
 const AddCarPage = () => {
+  const history = useHistory();
+
   const [page, setPage] = useState(1);
   const [details, setDetails] = useState({
     name: "",
@@ -32,7 +38,14 @@ const AddCarPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(details);
+    axios
+      .post(`${API_URL}/api/car/add`, details)
+      .then((response) => {
+        history.push(`/car/${response.data.slug}`);
+      })
+      .catch((err) => {
+        toast.error("An error occurred while submitting");
+      });
   };
 
   return (

@@ -8,6 +8,7 @@ const TextInput = ({
   onChange,
   placeholder,
   icon,
+  ...others
 }) => {
   return (
     <div className={styles.container}>
@@ -22,6 +23,7 @@ const TextInput = ({
           onChange={onChange}
           placeholder={placeholder}
           className={`uk-input uk-height-1-1 ${styles.input}`}
+          {...others}
         />
       </div>
     </div>
