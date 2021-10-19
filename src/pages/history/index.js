@@ -1,9 +1,29 @@
+import axios from "axios";
+import isEmpty from "is-empty";
+import { useEffect } from "react";
+import { useState } from "react";
+import toast from "react-hot-toast";
 import Card from "../../assets/components/common/card";
 import SearchBar from "../../assets/components/common/searchBar";
 import { VehicleListHistory } from "../../assets/components/common/vehicleList";
-import { vehiclesHistory } from "../../assets/data/vehicles";
+import { API_URL } from "../../utils/variables";
 
 const HistoryPage = () => {
+  const [loading, setLoading] = useState(true);
+  const [offences, setOffences] = useState([]);
+
+  useEffect(() => {
+    axios
+      .post(`${API_URL}/api/offences`)
+      .then((response) => {
+        setOffences(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        toast.error("Unable to load offences");
+      });
+  }, []);
+
   return (
     <div>
       <div className="uk-width-xlarge">
@@ -14,13 +34,19 @@ const HistoryPage = () => {
         <Card>
           <h2>History</h2>
 
-          <table className="uk-table uk-table-large uk-table-divider uk-table-hover">
-            <tbody>
-              {vehiclesHistory.map((vehicle, idx) => (
-                <VehicleListHistory key={idx} {...vehicle} />
-              ))}
-            </tbody>
-          </table>
+          {loading ? (
+            "Loading..."
+          ) : !isEmpty(offences) ? (
+            <table className="uk-table uk-table-large uk-table-divider uk-table-hover">
+              <tbody>
+                {offences.map((vehicle, idx) => (
+                  <VehicleListHistory key={idx} {...vehicle} />
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            "No appeals"
+          )}
         </Card>
       </div>
     </div>

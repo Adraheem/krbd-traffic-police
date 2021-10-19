@@ -2,21 +2,18 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useHistory, useParams } from "react-router";
+import { useParams } from "react-router";
 import Card from "../../assets/components/common/card";
 import TextInput from "../../assets/components/common/textInput";
 import { API_URL } from "../../utils/variables";
 
-const AddOffence = () => {
+const AddAppeal = () => {
   const [details, setDetails] = useState({
     car: "",
     reason: "",
-    amount: "",
-    location: "",
   });
 
-  const { car } = useParams();
-  const history = useHistory();
+  const { car, id } = useParams();
 
   const handleChange = (e) => {
     setDetails({ ...details, [e.target.name]: e.target.value });
@@ -30,10 +27,13 @@ const AddOffence = () => {
     e.preventDefault();
 
     axios
-      .post(`${API_URL}/api/offence/add`, details)
+      .post(`${API_URL}/api/appeal/add`, { ...details, offence: id })
       .then((response) => {
-        toast.success("Offence added successfully");
-        history.push(`/car/${car}`);
+        toast.success("Appeal added successfully");
+        setDetails({
+          car: "",
+          reason: "",
+        });
       })
       .catch((err) => {
         toast.error("An error occurred");
@@ -41,7 +41,7 @@ const AddOffence = () => {
   };
 
   return (
-    <div>
+    <div className="uk-margin-large-top">
       <Card>
         <h3>Add Offence</h3>
 
@@ -59,28 +59,7 @@ const AddOffence = () => {
                   disabled
                 />
               </div>
-              <div>
-                <TextInput
-                  type="tel"
-                  placeholder="Amount"
-                  name="amount"
-                  value={details.amount}
-                  onChange={handleChange}
-                  icon="cil:money"
-                />
-              </div>
             </div>
-          </div>
-
-          <div>
-            <TextInput
-              type="text"
-              placeholder="Location"
-              name="location"
-              value={details.location}
-              onChange={handleChange}
-              icon="akar-icons:location"
-            />
           </div>
 
           <div className="uk-margin">
@@ -108,4 +87,4 @@ const AddOffence = () => {
   );
 };
 
-export default AddOffence;
+export default AddAppeal;
