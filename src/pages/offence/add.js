@@ -1,6 +1,11 @@
+import axios from "axios";
+import { useEffect } from "react";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import { useHistory, useParams } from "react-router";
 import Card from "../../assets/components/common/card";
 import TextInput from "../../assets/components/common/textInput";
+import { API_URL } from "../../utils/variables";
 
 const AddOffence = () => {
   const [details, setDetails] = useState({
@@ -10,14 +15,29 @@ const AddOffence = () => {
     location: "",
   });
 
+  const { car } = useParams();
+  const history = useHistory();
+
   const handleChange = (e) => {
     setDetails({ ...details, [e.target.name]: e.target.value });
   };
 
+  useEffect(() => {
+    setDetails((d) => ({ ...d, car: car }));
+  }, [car]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(details);
+    axios
+      .post(`${API_URL}/api/offence/add`, details)
+      .then((response) => {
+        toast.success("Offence added successfully");
+        history.push(`/car/${car}`);
+      })
+      .catch((err) => {
+        toast.error("An error occurred");
+      });
   };
 
   return (
@@ -35,6 +55,7 @@ const AddOffence = () => {
                   name="car"
                   value={details.car}
                   onChange={handleChange}
+                  icon="bx:bxs-car"
                   disabled
                 />
               </div>
@@ -45,6 +66,7 @@ const AddOffence = () => {
                   name="amount"
                   value={details.amount}
                   onChange={handleChange}
+                  icon="cil:money"
                 />
               </div>
             </div>
@@ -57,6 +79,7 @@ const AddOffence = () => {
               name="location"
               value={details.location}
               onChange={handleChange}
+              icon="akar-icons:location"
             />
           </div>
 
@@ -71,7 +94,12 @@ const AddOffence = () => {
           </div>
 
           <div className="uk-margin">
-            <button type="submit" className="uk-button uk-button-primary uk-button-large uk-border-rounded uk-width-small">Submit</button>
+            <button
+              type="submit"
+              className="uk-button uk-button-primary uk-button-large uk-border-rounded uk-width-small"
+            >
+              Submit
+            </button>
           </div>
         </form>
       </Card>

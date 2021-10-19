@@ -1,5 +1,7 @@
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
+import date_formatter from "../../../../utils/dateFormatter";
+import { DOMAIN_URL } from "../../../../utils/variables";
 
 const VehicleList = ({ plate, model, time, fine, status }) => {
   return (
@@ -33,7 +35,23 @@ export const VehicleListHistory = ({
   fine,
   reason,
   status,
+  id,
 }) => {
+  const stat =
+    status === "paid"
+      ? "success"
+      : status === "sent"
+      ? "danger"
+      : status === "pending" || status === "removed"
+      ? "muted"
+      : null;
+
+  const sendBtn = () => {
+    alert(
+      `You have been fined N${fine} for ${reason}, follow this link to appeal ${DOMAIN_URL}/appeal/${plate}/${id}`
+    );
+  };
+
   return (
     <tr>
       <td className="uk-table-link">
@@ -43,24 +61,34 @@ export const VehicleListHistory = ({
               <Icon
                 icon="akar-icons:circle-fill"
                 inline={true}
-                className={`uk-text-${status} uk-text-small uk-margin-small-right`}
+                className={`uk-text-${stat} uk-text-small uk-margin-small-right`}
               />
-              {reason} - <span className="uk-text-primary">{fine}</span>
+              {reason} - <span className="uk-text-primary">N{fine}</span>
             </p>
             <p className="uk-margin-remove uk-text-small">
-              <span className="uk-margin-small-right">{time}</span>
+              <span className="uk-margin-small-right">
+                {date_formatter(time)}
+              </span>
               {place}
             </p>
           </div>
         </Link>
       </td>
 
-      <td className="uk-width-small">
-        <button className="uk-button uk-button-primary uk-border-rounded uk-padding-small uk-padding-remove-vertical shrink-on-click">
-          <span className="uk-text-nowrap">
-            <Icon icon="carbon:send-alt-filled" fontSize="1.5rem" /> Send
-          </span>
-        </button>
+      <td className="uk-width-small uk-text-center">
+        {status === "pending" ? (
+          <button
+            type="button"
+            onClick={sendBtn}
+            className="uk-button uk-button-primary uk-border-rounded uk-padding-small uk-padding-remove-vertical shrink-on-click"
+          >
+            <span className="uk-text-nowrap">
+              <Icon icon="carbon:send-alt-filled" fontSize="1.5rem" /> Send
+            </span>
+          </button>
+        ) : (
+          status
+        )}
       </td>
     </tr>
   );
@@ -81,7 +109,9 @@ export const AppealList = ({ reason, plate, time, content, status }) => {
               {reason} - <span className="uk-text-bold">{plate}</span>
             </p>
             <p className="uk-margin-remove uk-text-small uk-text-truncate">
-              <span className="uk-margin-small-right">{time}</span>
+              <span className="uk-margin-small-right">
+                {date_formatter(time)}
+              </span>
               {content}
             </p>
           </div>
