@@ -18,8 +18,10 @@ const VehicleList = ({ plate, model, time, fine, status }) => {
               <span className="uk-text-bold">{plate}</span> - {model}
             </p>
             <p className="uk-margin-remove uk-text-small">
-              <span className="uk-margin-small-right">{time}</span>
-              {fine}
+              <span className="uk-margin-small-right">
+                {date_formatter(time)}
+              </span>
+              NGN{fine}
             </p>
           </div>
         </Link>
@@ -63,7 +65,7 @@ export const VehicleListHistory = ({
                 inline={true}
                 className={`uk-text-${stat} uk-text-small uk-margin-small-right`}
               />
-              {reason} - <span className="uk-text-primary">N{fine}</span>
+              {reason} - <span className="uk-text-primary">NGN{fine}</span>
             </p>
             <p className="uk-margin-remove uk-text-small">
               <span className="uk-margin-small-right">

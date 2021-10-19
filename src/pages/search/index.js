@@ -4,19 +4,39 @@ import SearchBar from "../../assets/components/common/searchBar";
 import VehicleList, {
   VehicleListHistory,
 } from "../../assets/components/common/vehicleList";
-import { appeal, vehicles, vehiclesHistory } from "../../assets/data/vehicles";
+import { appeal, vehiclesHistory } from "../../assets/data/vehicles";
 import { useLocation } from "react-router";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { API_URL } from "../../utils/variables";
+import toast from "react-hot-toast";
+import isEmpty from "is-empty";
 
 const SearchPage = () => {
   const params = useParams();
   const { search } = useLocation();
 
+  const [result, setResult] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const q = new URLSearchParams(search);
   const query = q.get("q");
   const type = params.type;
 
-  console.log(query);
-  console.log(type);
+  // console.log(query);
+  // console.log(type);
+
+  useEffect(() => {
+    axios
+      .post(`${API_URL}/api/${type}/search`, { query })
+      .then((response) => {
+        setResult(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        toast.error("An error occurred");
+      });
+  }, [type, query]);
 
   return (
     <div>
@@ -32,24 +52,30 @@ const SearchPage = () => {
             {params.type === "appeal" && "Appeal"}
           </h2>
 
-          <table className="uk-table uk-table-large uk-table-divider uk-table-hover">
-            <tbody>
-              {type === "car" &&
-                vehicles.map((vehicle, idx) => (
-                  <VehicleList key={idx} {...vehicle} />
-                ))}
+          {loading ? (
+            "Loading..."
+          ) : isEmpty(result) ? (
+            "No results found"
+          ) : (
+            <table className="uk-table uk-table-large uk-table-divider uk-table-hover">
+              <tbody>
+                {type === "car" &&
+                  result.map((vehicle, idx) => (
+                    <VehicleList key={idx} {...vehicle} />
+                  ))}
 
-              {type === "history" &&
-                vehiclesHistory.map((vehicle, idx) => (
-                  <VehicleListHistory key={idx} {...vehicle} />
-                ))}
+                {type === "history" &&
+                  vehiclesHistory.map((vehicle, idx) => (
+                    <VehicleListHistory key={idx} {...vehicle} />
+                  ))}
 
-              {type === "appeal" &&
-                appeal.map((vehicle, idx) => (
-                  <VehicleListHistory key={idx} {...vehicle} />
-                ))}
-            </tbody>
-          </table>
+                {type === "appeal" &&
+                  appeal.map((vehicle, idx) => (
+                    <VehicleListHistory key={idx} {...vehicle} />
+                  ))}
+              </tbody>
+            </table>
+          )}
         </Card>
       </div>
     </div>
