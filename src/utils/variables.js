@@ -1,2 +1,2 @@
-export const API_URL = "http://localhost:4593";
-export const DOMAIN_URL = "http://localhost:3002";
+export const API_URL = "https://traffic-police-server.herokuapp.com";
+export const DOMAIN_URL = "https://traffic-police.herokuapp.com";
