@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 
 const LoginPage = (props) => {
   const [details, setDetails] = useState({ email: "", password: "" });
+  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
   const history = props.history;
@@ -22,13 +23,16 @@ const LoginPage = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    setLoading(true);
     axios
       .post(`${API_URL}/auth/login`, details)
       .then((response) => {
+        setLoading(false);
         props.loginUser(response.data.token);
         history.push("/");
       })
       .catch((error) => {
+        setLoading(false);
         if (!!error.response) {
           setErrors(error.response.data);
         }
@@ -53,6 +57,7 @@ const LoginPage = (props) => {
                 placeholder="Email Address"
                 value={details.email}
                 type="email"
+                required
               />
               {!!errors.email && (
                 <p className="uk-text-small uk-text-danger uk-margin-remove-top">
@@ -69,6 +74,7 @@ const LoginPage = (props) => {
                 placeholder="Password"
                 value={details.password}
                 type="password"
+                required
               />
               {!!errors.password && (
                 <p className="uk-text-small uk-text-danger uk-margin-remove-top">
@@ -80,9 +86,11 @@ const LoginPage = (props) => {
             <div className="uk-margin">
               <button
                 type="submit"
-                className="uk-button uk-button-primary uk-button-large uk-width-1-1 uk-border-rounded"
+                className={`uk-button uk-button-large uk-width-1-1 uk-border-rounded ${
+                  loading ? "uk-disabled" : "uk-button-primary"
+                }`}
               >
-                Login
+                {loading ? "Loading..." : "Login"}
               </button>
             </div>
           </form>

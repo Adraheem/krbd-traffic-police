@@ -6,6 +6,7 @@ import store from "./redux/store";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { loginUser, logoutUser } from "./redux/actions/authActions";
+import { Toaster } from "react-hot-toast";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -33,6 +34,7 @@ function App() {
   return (
     <Provider store={store}>
       <AllRoutes />
+      <Toaster position="bottom-left" />
     </Provider>
   );
 }
