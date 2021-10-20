@@ -4,7 +4,6 @@ import SearchBar from "../../assets/components/common/searchBar";
 import VehicleList, {
   VehicleListHistory,
 } from "../../assets/components/common/vehicleList";
-import { appeal, vehiclesHistory } from "../../assets/data/vehicles";
 import { useLocation } from "react-router";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -22,9 +21,6 @@ const SearchPage = () => {
   const q = new URLSearchParams(search);
   const query = q.get("q");
   const type = params.type;
-
-  // console.log(query);
-  // console.log(type);
 
   useEffect(() => {
     axios
@@ -65,12 +61,12 @@ const SearchPage = () => {
                   ))}
 
                 {type === "history" &&
-                  vehiclesHistory.map((vehicle, idx) => (
+                  result.map((vehicle, idx) => (
                     <VehicleListHistory key={idx} {...vehicle} />
                   ))}
 
                 {type === "appeal" &&
-                  appeal.map((vehicle, idx) => (
+                  result.map((vehicle, idx) => (
                     <VehicleListHistory key={idx} {...vehicle} />
                   ))}
               </tbody>
